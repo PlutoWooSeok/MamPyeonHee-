@@ -14,5 +14,3 @@
 ### Development
 ![json](https://img.shields.io/badge/-json-green?logo=json&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/-JavaScript-yellow?logo=javascript&logoColor=white)
-
-##  Explain Code 📦
