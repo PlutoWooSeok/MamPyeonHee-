@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+
+</head>
+
+<body>
+    <style>        
+        background-image : url('bK.png');
+    </style>
+    <br/><br/>
+    <center>
+        <button type="button" onclick="korea()" onmouseover="cursor:pointer" style = "border:0"><img src="bK.png" alt="error"></button>
+        <div class="korean_button"></div>
+        </button>
+    </center>
+    <center>
+        <button type="button" onclick="eng()" onmouseover="cursor:pointer" width:100%; style="border:0"><img src="bE.png" alt="error"></button>
+        <div class="english_button"></div>
+        </button>
+    </center>
+
+
+        <script>
+            const button1 = document.querySelector('.korean_button')
+            window.onload = function () { 
+                document.body.style.backgroundImage = "url('background.png')";
+                var audio = new Audio('선택문.mp3');
+                audio.play();
+                var $initial_scale = (screen.width / $('#wrap').width()).toFixed(4);
+                $('meta[name=viewport]').attr('content', '"width=device-width, initial-scale=' + $initial_scale + ', maximum-scale=2.0, user-scalable=yes"');
+            }// 웹이 실행되자마자 '선택문.mp3' 음성파일이 실행된다
+
+
+            function korea() { //한국어 버튼을 눌렀을 때 
+                var ratio = window.devicePixelRatio;
+                console.log(ratio);
+                if (ratio >= 2) {
+                    location.href = 'korea-m.html' //모바일로 웹을 실행했을 때
+                }
+                else {
+                    location.href = 'korea-p.html' //PC로 웹을 실행했을 때
+                }
+
+            }
+            function eng() { //English 버튼을 눌렀을 때
+                var ratio = window.devicePixelRatio;
+                console.log(ratio);
+                if (ratio >= 2) {
+                    location.href = 'english-m.html' //모바일로 웹을 실행했을 때
+                }
+                else {
+                    location.href = 'english-p.html' //PC로 웹을 실행했을 때
+                }
+
+            }
+
+
+
+        </script>
+</body>
+
+</html>

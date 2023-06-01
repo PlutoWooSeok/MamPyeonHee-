@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+<center><div id="webcam-container"></div></center>
+<center><div id="label-container" style ="font-weight: bold; font-size: 2.0em;line-height: 1.0em;"></div></center>
+<script type="text/javascript">
+    // More API functions here:
+    // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+
+    // the link to your model provided by Teachable Machine export panel
+    const URL = "./my_model/";
+
+    let model, webcam, labelContainer, maxPredictions;
+
+    // Load the image model and setup the webcam
+    window.onload = async function init() { // 웹에 들어갔을 때
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+
+        // load the model and metadata
+        // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+        // or files from your local hard drive
+        // Note: the pose library adds "tmImage" object to your window (window.tmImage)
+        model = await tmImage.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
+
+        // Convenience function to setup a webcam
+        const flip = true; // whether to flip the webcam
+        webcam = new tmImage.Webcam(800, 800, flip); // width, height, flip
+        await webcam.setup(); // request access to the webcam
+        await webcam.play(); //웹캠 실행
+        window.requestAnimationFrame(loop);
+
+        // append elements to the DOM
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+        labelContainer = document.getElementById("label-container");
+        for (let i = 0; i < maxPredictions; i++) { // and class labels
+            labelContainer.appendChild(document.createElement("div"));
+        }
+    }
+
+    async function loop() {
+        webcam.update(); // update the webcam frame
+        await predict();
+        window.requestAnimationFrame(loop);
+    }
+
+    // run the webcam image through the image model
+    async function predict() {
+        // predict can take in an image, video or canvas html element
+        const prediction = await model.predict(webcam.canvas); //웹캠을 실시간으로 업데이트 받아 이미지를 판별
+        var audio;
+        document.onmousedown = function leftClick() {
+          
+          if(prediction[0].className == "WHATDDA-PEACH" && prediction[0].probability.toFixed(2) >= 0.9){
+          labelContainer.childNodes[0].innerHTML = "왓따-복숭아입니다."
+          audio = new Audio('복숭아.mp3'); 
+          audio.play();
+          // 왓따-복숭아 음성출력
+      }
+      else if(prediction[1].className == "WHATDDA-COLA" && prediction[1].probability.toFixed(2) >= 0.90){
+          labelContainer.childNodes[0].innerHTML = "왓따-콜라입니다."
+          audio = new Audio('콜라맛.mp3');
+          audio.play();
+          //왓따-콜라 음성출력
+      }
+      else if(prediction[2].className == "COCA_COLA-ZERO SUGAR" && prediction[2].probability.toFixed(2) >= 0.90){
+          labelContainer.childNodes[0].innerHTML = "코카콜라 제로입니다."
+          audio = new Audio('코카콜라제로.mp3');
+          audio.play();
+          //코카콜라제로 음성출력
+      }
+      else if(prediction[3].className == "Chilsung Cidar" && prediction[3].probability.toFixed(2) >= 0.90){
+          labelContainer.childNodes[0].innerHTML = "칠성사이다입니다."
+          audio = new Audio('칠성사이다.mp3');
+          audio.play();
+          //칠성사이다 음성출력
+      }
+      else if(prediction[4].className == "Tropicana Sparkling_Passion fruit" && prediction[4].probability.toFixed(2) >= 0.90){
+          labelContainer.childNodes[0].innerHTML = "트로피카나-패션후루츠입니다."
+          audio = new Audio('패션후르츠맛.mp3');
+          audio.play();
+          //트로피카나-패션후르츠 음성출력
+       }
+      else if(prediction[5].className == "TEJAVA" && prediction[5].probability.toFixed(2) >= 0.90){
+          labelContainer.childNodes[0].innerHTML = "데자와입니다."
+          audio = new Audio('데자와.mp3');
+          audio.play();
+          //데자와 음성출력
+      }
+      else if(prediction[6].className == "Milkis" && prediction[6].probability.toFixed(2) >= 0.90){
+          labelContainer.childNodes[0].innerHTML = "밀키스입니다."
+          audio = new Audio('밀키스.mp3');
+          audio.play();
+          //밀키스 음성출력
+      }
+      else if(prediction[7].className == "HONEY BUTTER CHIP" && prediction[7].probability.toFixed(2) >= 0.90){
+          labelContainer.childNodes[0].innerHTML = "허니버터칩입니다."
+          audio = new Audio('허니버터칩.mp3');
+          audio.play();
+          //허니버터칩 음성출력
+      }
+      else if(prediction[8].className == "DORITOS_NACHO CHEESE" && prediction[8].probability.toFixed(2) >= 0.90){
+          labelContainer.childNodes[0].innerHTML = "도리토스-나쵸치즈맛입니다."
+          audio = new Audio('도리토스.mp3');
+          audio.play();
+          //토리토스-나쵸치즈 음성출력
+      }
+      else if(prediction[9].className == "POTAO CHIP_ORIGINAL" && prediction[9].probability.toFixed(2) >= 0.90){
+          labelContainer.childNodes[0].innerHTML = "포테토칩입니다."
+          audio = new Audio('포테토칩.mp3');
+          audio.play();
+          //포테토칩 음성출력
+      }
+      else{
+          labelContainer.childNodes[0].innerHTML = "인식하지 못하였습니다."
+          audio = new Audio('none.mp3');
+          audio.play();
+      }
+        }
+    }
+
+
+</script>
+
+</body>
+</html>

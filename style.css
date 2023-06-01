@@ -1,0 +1,25 @@
+﻿* {
+    font-family: 'Noto Sans KR', sans-serif;
+    list-style: none;
+    text-decoration: none;
+    border-collapse: collapse;
+    margin: 0px; /*잘 설정하면 원하는 부분을 가운데로 옮길수 있음.*/
+    padding: 0px;
+    color: #000;
+}
+
+.english_button{
+    display: flex;
+    margin: auto; 
+    background-image:url("image/button_English.png"); 
+    width: 250px; 
+    height: 100px;
+}
+
+.korean_button{
+    display: flex; 
+    margin: auto;
+    background-image:url("image/button_korean.png");
+    width: 250px; 
+    height: 100px;
+}
